@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
-const { getAllTodos, getTodoById, createTodo, updateTodoById, deleteTodoById } = require('../db');
+const { getAllTodos, getTodoById, createTodo, updateTodoById, toggleTodoById, deleteTodoById } = require('../db');
 
 // GET - /api/todos - get all todos
 router.get('/', async (req, res, next) => {
@@ -51,6 +51,17 @@ router.patch('/:id', async (req, res, next) => {
         next(error);
     }
 });
+
+// PATCH - /api/todos/:id/toggle - toggle a todo
+router.patch('/:id/toggle', async (req, res, next) => {
+    try {
+        const todo = await toggleTodoById(req.params.id);
+        res.send(todo);
+    } catch (error) {
+        next(error);
+    }
+});
+
 
 // DELETE - /api/todos/:id - delete a todo
 router.delete('/:id', async (req, res, next) => {

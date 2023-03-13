@@ -70,6 +70,21 @@ async function updateTodoById(id, fields = {}) {
     }
 }
 
+// async function to toggle a todo as complete or incomplete
+async function toggleTodoById(id) {
+    try {
+        const { rows: [updatedTodo] } = await client.query(`
+            UPDATE todos
+            SET completed=NOT completed
+            WHERE id=$1
+            RETURNING *;
+        `, [id]);
+
+        return updatedTodo;
+    } catch (error) {
+        throw error;
+    }
+}
 
 // async function to delete a todo
 async function deleteTodoById(id) {
@@ -92,5 +107,6 @@ module.exports = {
     getAllTodos,
     getTodoById,
     updateTodoById,
+    toggleTodoById,
     deleteTodoById
 };
