@@ -21,7 +21,7 @@ async function createTodo({ todo, completed = false }) {
 async function getAllTodos() {
     try {
         const { rows } = await client.query(`
-            SELECT * FROM todos;
+          SELECT * FROM todos ORDER BY id;
         `);
 
         return rows;
@@ -48,7 +48,7 @@ async function getTodoById(id) {
 async function updateTodoById(id, fields = {}) {
     // build the set string
     const setString = Object.keys(fields).map(
-        (key, index) => `"${ key }"=$${ index + 1 }`
+        (key, index) => `"${key}"=$${index + 1}`
     ).join(', ');
 
     // return early if this is called without fields
@@ -59,11 +59,11 @@ async function updateTodoById(id, fields = {}) {
     try {
         const { rows: [updatedTodo] } = await client.query(`
             UPDATE todos
-            SET ${ setString }
-            WHERE id=${ id }
+            SET ${setString}
+            WHERE id=${id}
             RETURNING *;
         `, Object.values(fields));
-    
+
         return updatedTodo;
     } catch (error) {
         throw error;

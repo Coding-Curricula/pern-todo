@@ -79,53 +79,64 @@ export default function Todo() {
                 />
                 <button>Create</button>
             </form>
-            <ul>
-                {todos.map((todo) => (
-                    <li key={todo.id}>
-                        {todo.todo}
-                        <input
-                            type="checkbox"
-                            onChange={() => toggleTodo(todo.id)}
-                            checked={todo.completed}
-                        />
-                        {isEditing && todo.id === currentTodo.id ? (
-                            <>
-                                <form
-                                    onSubmit={(e) => {
-                                        updateTodo(todo.id);
-                                    }}
-                                >
-                                    <input
-                                        type="text"
-                                        value={updatedTodo}
-                                        onChange={(e) =>
-                                            setUpdatedTodo(e.target.value)
-                                        }
-                                    />
-                                    <button>Update</button>
-                                </form>
-                            </>
-                        ) : (
-                            <>
-                                <button
-                                    onClick={() => {
-                                        setIsEditing(true);
-                                        setCurrentTodo(todo);
-                                        setUpdatedTodo(todo.todo);
-                                    }}
-                                >
-                                    Edit
-                                </button>
-                                <button
-                                    onClick={() => deleteTodo(todo.id)}
-                                >
-                                    Delete
-                                </button>
-                            </>
-                        )}
-                    </li>
-                ))}
-            </ul>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Task</th>
+                        <th>Completed</th>
+                        <th>Edit/Delete</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {todos.map((todo) => (
+                        <tr key={todo.id}>
+                            <td>{todo.todo}</td>
+                            <td>
+                                <input
+                                    type="checkbox"
+                                    onChange={() => toggleTodo(todo.id)}
+                                    checked={todo.completed}
+                                />
+                            </td>
+                            <td>
+                                {isEditing && todo.id === currentTodo.id ? (
+                                    <form
+                                        onSubmit={(e) => {
+                                            updateTodo(todo.id);
+                                        }}
+                                    >
+                                        <input
+                                            type="text"
+                                            value={updatedTodo}
+                                            onChange={(e) =>
+                                                setUpdatedTodo(e.target.value)
+                                            }
+                                        />
+                                        <button>Update</button>
+                                    </form>
+                                ) : (
+                                    <>
+                                        <button
+                                            onClick={() => {
+                                                setIsEditing(true);
+                                                setCurrentTodo(todo);
+                                                setUpdatedTodo(todo.todo);
+                                            }}
+                                        >
+                                            Edit
+                                        </button>
+                                        <button
+                                            onClick={() => deleteTodo(todo.id)}
+                                        >
+                                            Delete
+                                        </button>
+                                    </>
+                                )}
+                            </td>
+                        </tr>
+                    ))}
+                </tbody>
+            </table>
         </div>
     );
 }
