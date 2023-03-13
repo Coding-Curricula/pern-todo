@@ -1,0 +1,29 @@
+{
+  "name": "bikesbikesbikes",
+  "version": "1.0.0",
+  "description": "an API for tracking bike rentals using node, express, and postgresql",
+  "main": "index.js",
+  "scripts": {
+    "seed:dev": "nodemon ./db/seed.js",
+    "seed": "node ./db/seed.js",
+    "start:dev": "nodemon index.js",
+    "start": "node index.js",
+    "test": "jest --runInBand",
+    "test:watch": "jest --watchAll --runInBand"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.4"
+  },
+  "dependencies": {
+    "axios": "^0.19.2",
+    "bcrypt": "^4.0.1",
+    "chalk": "^4.0.0",
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "jest": "^26.0.1",
+    "jsonwebtoken": "^8.5.1",
+    "morgan": "^1.10.0",
+    "pg": "^8.2.1"
+  }
+}
