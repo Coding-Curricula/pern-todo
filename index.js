@@ -20,6 +20,14 @@ server.use(express.urlencoded({extended: true}));
 // Router: /api
 server.use('/api', require('./api'));
 
+// Serve static assets from the client/build directory
+server.use(express.static('client/build'));
+
+// Serve the index.html file for any other requests
+server.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'client/build/index.html'));
+});
+
 // 404 handler
 server.get('*', (req, res) => {
   res.status(404).send({error: '404 - Not Found', message: 'No route found for the requested URL'});
